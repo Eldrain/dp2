@@ -8,8 +8,9 @@ import geometry.IPoint;
  */
 public abstract class VisualCurve implements ICurve, IDrawable {
 
-    public void Draw(IDrawer drawer, int step) {
-        double h = (double)1/step;
+    @Override
+    public void Draw(IDrawer drawer) {
+        double h = (double)1/100;
         IPoint p = this.getPoint(0), nextP = this.getPoint(h);
 
         drawer.startP(p);

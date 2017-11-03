@@ -21,8 +21,8 @@ public class Main extends Application {
 	
 	public static final int CANVAS_WIDTH = 300, CANVAS_HEIGHT = 400;
 	Canvas reg1, reg2;
-	Context ctx1, ctx2;
-	Button btn1, btn2;
+	Curves cr1, cr2;
+	Button btn1, btn2, btn3, btn4;
 	static Text ta;
 	Random rnd;
 
@@ -48,6 +48,14 @@ public class Main extends Application {
         btn2 = new Button("generate");
         btn2.setTranslateX(400);
         btn2.setTranslateY(520);
+
+        btn3 = new Button("Save SVG");
+        btn3.setTranslateX(150);
+        btn3.setTranslateY(520);
+
+        btn4 = new Button("Save SVG");
+        btn4.setTranslateX(500);
+        btn4.setTranslateY(520);
         
         ta = new Text();
         ta.setTranslateX(400);
@@ -57,6 +65,8 @@ public class Main extends Application {
         root.getChildren().add(reg2);
         root.getChildren().add(btn1);
         root.getChildren().add(btn2);
+        root.getChildren().add(btn3);
+        root.getChildren().add(btn4);
         root.getChildren().add(ta);
 
         primaryStage.show();
@@ -68,52 +78,66 @@ public class Main extends Application {
         con2.rect(0, 0, 300, 400);
         Drawer1 drawer1 = new Drawer1(con1);
         Drawer2 drawer2 = new Drawer2(con2);
-        
-        ctx1 = new Context(drawer1, 100);
-        ctx2 = new Context(drawer2, 100);
-        
+        SVGDrawer1 drawerSvg1 = new SVGDrawer1(CANVAS_WIDTH, CANVAS_HEIGHT, "picture.svg");
+
+        cr1 = new Curves();
+        cr2 = new Curves();
+        //ctx3 = new Context(drawerSvg, 100);
+
         btn1.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 switch(rnd.nextInt(2)) {
                 case 0:
-                	ctx1.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                	cr1.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 case 1:
-                	ctx1.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                	cr1.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
                 			CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 }
-                ctx1.update();
+                cr1.Draw(drawer1);
             }    
         });
         
         btn2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
+            @Override
+            public void handle(ActionEvent e) {
                 switch(rnd.nextInt(2)) {
                 case 0:
-                	ctx2.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                	cr2.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 case 1:
-                	ctx2.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                	cr2.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
                 			CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 }
-                ctx2.update();
+                cr2.Draw(drawer2);
             }    
         });
 
-        draw();
+        btn3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                cr1.Draw(drawerSvg1);
+            }
+        });
+        btn4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                cr2.Draw(drawerSvg1);
+            }
+        });
+
+        //draw();
     }
     
-    public void draw() {
+    /*public void draw() {
         VisualLine line = new VisualLine(5, 5, 200, 300);
-    	ctx1.addCurve(line);
-    	ctx2.addCurve(line);
+    	cr1.addCurve(line);
+    	cr2.addCurve(line);
     	
-    	
-    	ctx1.update();
-    	ctx2.update(); 	
-    }
+    	//cr1.Draw(dr);
+    }*/
 
     public static void main(String[] args) {
         launch(args);
