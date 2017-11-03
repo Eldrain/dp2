@@ -3,8 +3,6 @@ package visual;
 import geometry.IPoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 
 /**
  * Created by Артём on 13.10.2017.
@@ -15,6 +13,7 @@ public class Drawer1 implements IDrawer {
     public Drawer1(GraphicsContext c) {
         this.c = c;
     }
+    
     @Override
     public void line(IPoint from, IPoint to) {
         c.setStroke(Color.GREEN);
@@ -31,16 +30,15 @@ public class Drawer1 implements IDrawer {
 
     @Override
     public void finishP(IPoint prevP, IPoint lastP) {
-        //c.setLineWidth(1);
-        c.setStroke(Color.GREEN);
         double angle = angle(prevP, lastP);
+        
         c.moveTo(lastP.getX(), lastP.getY());
-        c.lineTo(lastP.getX() + Math.cos(angle - Math.PI/6) * 10, lastP.getY() + Math.sin(angle - Math.PI/6) * 10);
-
+        c.lineTo(lastP.getX() + Math.cos(angle - Math.PI/6) * 10, lastP.getY() - Math.sin(angle - Math.PI/6) * 10);
         c.moveTo(lastP.getX(), lastP.getY());
-        c.lineTo(lastP.getX() + Math.cos(angle + Math.PI/6) * 10, lastP.getY() + Math.sin(angle + Math.PI/6) * 10);
-
-        //c.strokeText(String.valueOf(angle(prevP, lastP)), lastP.getX(), lastP.getY());
+        
+        double xp = Math.cos(angle + Math.PI/6) * 10, yp = Math.sin(angle + Math.PI/6) * 10;
+        c.lineTo(lastP.getX() + xp, lastP.getY() - yp);
+        c.stroke();
     }
 
     private double angle(IPoint prevP, IPoint lastP) {
@@ -56,18 +54,11 @@ public class Drawer1 implements IDrawer {
         }
 
         angle =  Math.atan(y1/x1);
-        if(x1 > 0) {
-            if(y1 > 0)
-                angle = -angle;
-            else
-                angle = Math.PI - angle;
-
-        } else {
-            if(y1 > 0)
-                angle = Math.PI - angle;
-            else
-                angle = 2*Math.PI - angle;
-        }
+        if(x1 > 0)
+        	angle = Math.PI - angle;
+        else
+        	angle = 2*Math.PI - angle;
+        
 
         return angle;
     }

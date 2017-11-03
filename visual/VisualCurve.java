@@ -2,7 +2,6 @@ package visual;
 
 import geometry.ICurve;
 import geometry.IPoint;
-import javafx.scene.canvas.GraphicsContext;
 
 /**
  * Created by Артём on 04.10.2017.
