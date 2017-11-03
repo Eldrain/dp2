@@ -20,6 +20,7 @@ import visual.*;
 public class Main extends Application {
 	
 	public static final int CANVAS_WIDTH = 300, CANVAS_HEIGHT = 400;
+    SVGDrawer1 drawerSvg1;
 	Canvas reg1, reg2;
 	Curves cr1, cr2;
 	Button btn1, btn2, btn3, btn4;
@@ -70,7 +71,6 @@ public class Main extends Application {
         root.getChildren().add(ta);
 
         primaryStage.show();
-        
 
         GraphicsContext con1 = reg1.getGraphicsContext2D();
         GraphicsContext con2 = reg2.getGraphicsContext2D();
@@ -78,7 +78,7 @@ public class Main extends Application {
         con2.rect(0, 0, 300, 400);
         Drawer1 drawer1 = new Drawer1(con1);
         Drawer2 drawer2 = new Drawer2(con2);
-        SVGDrawer1 drawerSvg1 = new SVGDrawer1(CANVAS_WIDTH, CANVAS_HEIGHT, "picture.svg");
+        drawerSvg1 = new SVGDrawer1(CANVAS_WIDTH, CANVAS_HEIGHT, "picture.svg");
 
         cr1 = new Curves();
         cr2 = new Curves();

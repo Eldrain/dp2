@@ -20,15 +20,17 @@ public abstract class ASVGDrawer implements IDrawer {
         try {
             file = new FileWriter(filename);
             file.append("<svg width=\"" + width + "\" height=\"" + height + "\" xmlns=\"http://www.w3.org/2000/svg\">");
-            file.flush();
+            //file.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-    public void save() {
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
         try {
+            file.append("</svg>");
             file.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -16,8 +16,9 @@ public class SVGDrawer1 extends ASVGDrawer {
     @Override
     public void line(IPoint from, IPoint to) {
         try {
-            file.append("<line stroke=\"#000\" x1=\"" + from.getX() + "\" y1=\"" + from.getY() +
+            file.append("\n<line stroke=\"#000\" x1=\"" + from.getX() + "\" y1=\"" + from.getY() +
                     "\" x2=\"" + to.getX() + "\" y2=\"" + to.getY() + "\" />");
+            file.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,5 +32,10 @@ public class SVGDrawer1 extends ASVGDrawer {
     @Override
     public void finishP(IPoint prevP, IPoint lastP) {
 
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
     }
 }
