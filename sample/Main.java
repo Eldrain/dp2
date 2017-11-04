@@ -1,14 +1,10 @@
 package sample;
 
-import java.util.ArrayList;
 import java.util.Random;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -134,17 +130,7 @@ public class Main extends Application {
                 drawerSvg2.closeFile();
             }
         });
-
-        //draw();
     }
-    
-    /*public void draw() {
-        VisualLine line = new VisualLine(5, 5, 200, 300);
-    	cr1.addCurve(line);
-    	cr2.addCurve(line);
-    	
-    	//cr1.Draw(dr);
-    }*/
 
     public static void main(String[] args) {
         launch(args);

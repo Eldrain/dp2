@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Curves {
 	private ArrayList<VisualCurve> curves;
-	//private int step;
 	
 	public Curves() {
 		curves = new ArrayList<VisualCurve>();
