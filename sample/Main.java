@@ -20,7 +20,9 @@ import visual.*;
 public class Main extends Application {
 	
 	public static final int CANVAS_WIDTH = 300, CANVAS_HEIGHT = 400;
+	public static final String FILE1 = "picture1.svg", FILE2 = "picture2.svg";
     SVGDrawer1 drawerSvg1;
+    SVGDrawer2 drawerSvg2;
 	Canvas reg1, reg2;
 	Curves cr1, cr2;
 	Button btn1, btn2, btn3, btn4;
@@ -78,7 +80,8 @@ public class Main extends Application {
         con2.rect(0, 0, 300, 400);
         Drawer1 drawer1 = new Drawer1(con1);
         Drawer2 drawer2 = new Drawer2(con2);
-        drawerSvg1 = new SVGDrawer1(CANVAS_WIDTH, CANVAS_HEIGHT, "picture.svg");
+        drawerSvg1 = new SVGDrawer1(CANVAS_WIDTH, CANVAS_HEIGHT);
+        drawerSvg2 = new SVGDrawer2(CANVAS_WIDTH, CANVAS_HEIGHT);
 
         cr1 = new Curves();
         cr2 = new Curves();
@@ -118,13 +121,17 @@ public class Main extends Application {
         btn3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                drawerSvg1.openFile(FILE1);
                 cr1.Draw(drawerSvg1);
+                drawerSvg1.closeFile();
             }
         });
         btn4.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                cr2.Draw(drawerSvg1);
+                drawerSvg2.openFile(FILE2);
+                cr2.Draw(drawerSvg2);
+                drawerSvg2.closeFile();
             }
         });
 

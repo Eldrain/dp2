@@ -14,21 +14,24 @@ public abstract class ASVGDrawer implements IDrawer {
     private double width, height;
     protected FileWriter file;
 
-    public ASVGDrawer(double width, double height, String filename) {
+    public ASVGDrawer(double width, double height) {
         this.width = width;
         this.height = height;
+        file = null;
+    }
+
+    public void openFile(String filename) {
+        if(file == null)
         try {
             file = new FileWriter(filename);
             file.append("<svg width=\"" + width + "\" height=\"" + height + "\" xmlns=\"http://www.w3.org/2000/svg\">");
-            //file.flush();
+            file.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
+    public void closeFile() {
         try {
             file.append("</svg>");
             file.close();
