@@ -23,4 +23,14 @@ public class VisualBezier extends VisualCurve {
         return b.getPoint(t);
     }
 
+    @Override
+    public double getLength(double t) {
+        return b.getLength(t);
+    }
+
+    @Override
+    public double getParam(double l) {
+        return b.getParam(l);
+    }
+
 }

@@ -19,4 +19,14 @@ public class VisualLine extends VisualCurve {
     public IPoint getPoint(double t) {
         return line.getPoint(t);
     }
+
+    @Override
+    public double getLength(double t) {
+        return line.getLength(t);
+    }
+
+    @Override
+    public double getParam(double l) {
+        return line.getParam(l);
+    }
 }

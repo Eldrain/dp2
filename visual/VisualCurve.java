@@ -1,7 +1,9 @@
 package visual;
 
 import geometry.ICurve;
+import geometry.ILength;
 import geometry.IPoint;
+import sample.Main;
 
 /**
  * Created by Артём on 04.10.2017.
@@ -21,4 +23,5 @@ public abstract class VisualCurve implements ICurve, IDrawable {
         }
         drawer.finishP(p, nextP);
     }
+
 }

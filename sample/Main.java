@@ -15,15 +15,18 @@ import visual.*;
 
 public class Main extends Application {
 	
-	public static final int CANVAS_WIDTH = 300, CANVAS_HEIGHT = 400;
-	public static final String FILE1 = "picture1.svg", FILE2 = "picture2.svg";
-    SVGDrawer1 drawerSvg1;
-    SVGDrawer2 drawerSvg2;
-	Canvas reg1, reg2;
-	Curves cr1, cr2;
-	Button btn1, btn2, btn3, btn4;
-	static Text ta;
-	Random rnd;
+	public static final int RUNONCURVE_STEPS = 1000;
+	private static final int CANVAS_WIDTH = 300;
+	private static final int CANVAS_HEIGHT = 400;
+	private static final String FILE1 = "picture1.svg";
+	private static final String FILE2 = "picture2.svg";
+    private SVGDrawer1 drawerSvg1;
+    private SVGDrawer2 drawerSvg2;
+    private Canvas reg1, reg2;
+    private Curves cr1, cr2;
+    private Button btn1, btn2, btn3, btn4;
+    private static Text ta;
+    private Random rnd;
 
     @Override
     public void start(Stage primaryStage) throws Exception{

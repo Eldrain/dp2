@@ -5,5 +5,9 @@ package geometry;
  */
 public interface ICurve {
 
-    public IPoint getPoint(double t);
+    IPoint getPoint(double t);
+
+    double getLength(double t);
+
+    double getParam(double l);
 }
