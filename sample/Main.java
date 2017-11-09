@@ -133,6 +133,14 @@ public class Main extends Application {
                 drawerSvg2.closeFile();
             }
         });
+
+        VisualLine line = new VisualLine(100, 100, 200, 205);
+        VisualBezier b = new VisualBezier(100, 100, 190, 360, 120, 250, 125, 250);
+
+        line.Draw(drawer1);
+        b.Draw(drawer2);
+        line.DrawPoint(drawer1, line.getParam(line.getLength(0.5)));
+        b.DrawPoint(drawer2, line.getParam(line.getLength(0.5)));
     }
 
     public static void main(String[] args) {

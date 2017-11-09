@@ -18,13 +18,15 @@ public abstract class ACurve implements ICurve {
         double h = (double)1/ Main.RUNONCURVE_STEPS;
         double l = 0;
         IPoint p = this.getPoint(0);
-        IPoint nextP = null;
+        IPoint nextP = p;
 
         for(; t <= 1; t+=h) {
-            if(len.isStopping(t, l))
-                return len.result(t, l);
             p = nextP;
             nextP = this.getPoint(t);
+            l += distance(p, nextP);
+
+            if(len.isStopping(t, l))
+                return len.result(t, l);
         }
         return len.result(t, l);
     }
@@ -37,5 +39,9 @@ public abstract class ACurve implements ICurve {
     @Override
     public double getParam(double l) {
         return runOnCurve(new ParamComparator(l));
+    }
+
+    private double distance(IPoint p1, IPoint p2) {
+        return Math.sqrt(Math.pow(p1.getX() - p2.getX(), 2) + Math.pow(p1.getY() - p2.getY(), 2));
     }
 }
