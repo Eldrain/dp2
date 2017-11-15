@@ -5,17 +5,25 @@ package geometry;
  */
 public class MoveTo implements ICurve {
     private ICurve mCurve;
-    IPoint mStartPoint;
+    IPoint mVector;
 
     public MoveTo(ICurve curve, double moveX, double moveY) {
         mCurve = curve;
-        mStartPoint.setX(moveX);// = moveX;
-        mStartPoint.setY(moveY);//mY = moveY;
+        mVector = new Point(0, 0);
+        mVector.setX(moveX - curve.getPoint(0).getX());
+        mVector.setY(moveY - curve.getPoint(0).getY());
+    }
+
+    public MoveTo(ICurve curve, IPoint point) {
+        mCurve = curve;
+        mVector = new Point(0, 0);
+        mVector.setX(point.getX() - curve.getPoint(0).getX());
+        mVector.setY(point.getY() - curve.getPoint(0).getY());
     }
 
     @Override
     public IPoint getPoint(double t) {
-        return mCurve.getPoint(t).add(mStartPoint.getX(), mStartPoint.getY());
+        return mCurve.getPoint(t).add(mVector.getX(), mVector.getY());
     }
 
     @Override

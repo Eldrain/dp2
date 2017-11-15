@@ -2,9 +2,7 @@ package sample;
 
 import java.util.Random;
 
-import geometry.Bezier;
-import geometry.Fragment;
-import geometry.Point;
+import geometry.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -94,11 +92,12 @@ public class Main extends Application {
             @Override public void handle(ActionEvent e) {
                 switch(rnd.nextInt(2)) {
                 case 0:
-                	//cr1.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                	cr1.addCurve(new VisualCurve(new Line(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                            CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble())));
                 	break;
                 case 1:
-                	//cr1.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
-                	//		CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                	cr1.addCurve(new VisualCurve(new Bezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                			CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble())));
                 	break;
                 }
                 cr1.Draw(drawer1);
@@ -110,11 +109,13 @@ public class Main extends Application {
             public void handle(ActionEvent e) {
                 switch(rnd.nextInt(2)) {
                 case 0:
-                	//cr2.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                    cr2.addCurve(new VisualCurve(new Line(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                            CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble())));
                 	break;
                 case 1:
-                	//cr2.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
-                	//		CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                    cr2.addCurve(new VisualCurve(new Bezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                            CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH * rnd.nextDouble(),
+                            CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble())));
                 	break;
                 }
                 cr2.Draw(drawer2);
@@ -137,16 +138,28 @@ public class Main extends Application {
                 drawerSvg2.closeFile();
             }
         });
+        Bezier bez = new Bezier(new Point(100, 100), new Point(190, 360), new Point(120, 250), new Point(125, 250));
+        Line line = new Line(30, 350, 120, 100);
+        VisualCurve visBez = new VisualCurve(bez);
+        VisualCurve visLine = new VisualCurve(line);
+        visLine.Draw(drawer2);
+        //1
+        Fragment fr1 = new Fragment(bez, 0.5, 1);
+        VisualCurve temp = new VisualCurve(fr1);
+        temp.Draw(drawer1);
+        //2
+        MoveTo moveFrag = new MoveTo(fr1, 40, 40);
+        temp = new VisualCurve(moveFrag);
+        temp.Draw(drawer1);
+        //3
+        Fragment fr2 = new Fragment(line, 0.3, 0.7);
+        MoveTo moveFrag2 = new MoveTo(fr2, fr1.getPoint(1));
 
-        //VisualLine line = new VisualLine(100, 100, 200, 205);
-        Bezier b = new Bezier(new Point(100, 100), new Point(190, 360), new Point(120, 250), new Point(125, 250));
-        VisualCurve b1 = new VisualCurve(b);
+        temp = new VisualCurve(fr1);
+        temp.Draw(drawer2);
+        temp = new VisualCurve(moveFrag2);
+        temp.Draw(drawer2);
 
-        Fragment fr1 = new Fragment(b, 0.5, 1);
-        VisualCurve b2 = new VisualCurve(fr1);
-
-        //line.Draw(drawer1);
-        b2.Draw(drawer2);
         //line.DrawPoint(drawer1, line.getParam(line.getLength(0.5)));
         //b1.DrawPoint(drawer2, line.getParam(line.getLength(0.5)));
     }
