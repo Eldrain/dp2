@@ -4,42 +4,50 @@ package geometry;
  * Created by Артём on 04.10.2017.
  */
 public class Point implements IPoint {
-    private double x, y;
+    private double mX;
+    private double mY;
 
     public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
+        mX = x;
+        mY = y;
     }
 
     @Override
     public double getX() {
-        return x;
-    }
-
-    @Override
-    public void setX(double x) {
-        this.x = x;
+        return mX;
     }
 
     @Override
     public double getY() {
-        return y;
+        return mY;
+    }
+
+    @Override
+    public void setX(double x) {
+        mX = x;
     }
 
     @Override
     public void setY(double y) {
-        this.y = y;
+        mY = y;
+    }
+
+    @Override
+    public IPoint add(double x, double y) {
+        mX += x;
+        mY += y;
+        return this;
     }
 
     public IPoint mult(double t) {
-        x = x * t;
-        y = y * t;
+        mX = mX * t;
+        mY = mY * t;
         return this;
     }
 
     public Point add(IPoint p, double mn) {
-        x = x + mn*p.getX();
-        y = y + mn*p.getY();
+        mX = mX + mn*p.getX();
+        mY = mY + mn*p.getY();
         return this;
     }
 }

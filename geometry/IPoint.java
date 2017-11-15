@@ -4,11 +4,14 @@ package geometry;
  * Created by Артём on 04.10.2017.
  */
 public interface IPoint {
-    public double x = 0, y = 0;
+    double getX();
 
-    public double getX();
-    public void setX(double x);
-    public double getY();
-    public void setY(double y);
+    double getY();
+
+    void setX(double x);
+
+    void setY(double y);
+
+    IPoint add(double x, double y);
 
 }

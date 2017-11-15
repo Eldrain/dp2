@@ -1,6 +1,10 @@
 package sample;
 
 import java.util.Random;
+
+import geometry.Bezier;
+import geometry.Fragment;
+import geometry.Point;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -90,11 +94,11 @@ public class Main extends Application {
             @Override public void handle(ActionEvent e) {
                 switch(rnd.nextInt(2)) {
                 case 0:
-                	cr1.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                	//cr1.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 case 1:
-                	cr1.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
-                			CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                	//cr1.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                	//		CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 }
                 cr1.Draw(drawer1);
@@ -106,11 +110,11 @@ public class Main extends Application {
             public void handle(ActionEvent e) {
                 switch(rnd.nextInt(2)) {
                 case 0:
-                	cr2.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                	//cr2.addCurve(new VisualLine(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 case 1:
-                	cr2.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
-                			CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
+                	//cr2.addCurve(new VisualBezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                	//		CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 }
                 cr2.Draw(drawer2);
@@ -134,13 +138,17 @@ public class Main extends Application {
             }
         });
 
-        VisualLine line = new VisualLine(100, 100, 200, 205);
-        VisualBezier b = new VisualBezier(100, 100, 190, 360, 120, 250, 125, 250);
+        //VisualLine line = new VisualLine(100, 100, 200, 205);
+        Bezier b = new Bezier(new Point(100, 100), new Point(190, 360), new Point(120, 250), new Point(125, 250));
+        VisualCurve b1 = new VisualCurve(b);
 
-        line.Draw(drawer1);
-        b.Draw(drawer2);
-        line.DrawPoint(drawer1, line.getParam(line.getLength(0.5)));
-        b.DrawPoint(drawer2, line.getParam(line.getLength(0.5)));
+        Fragment fr1 = new Fragment(b, 0.5, 1);
+        VisualCurve b2 = new VisualCurve(fr1);
+
+        //line.Draw(drawer1);
+        b2.Draw(drawer2);
+        //line.DrawPoint(drawer1, line.getParam(line.getLength(0.5)));
+        //b1.DrawPoint(drawer2, line.getParam(line.getLength(0.5)));
     }
 
     public static void main(String[] args) {

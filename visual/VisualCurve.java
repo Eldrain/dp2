@@ -6,7 +6,12 @@ import geometry.IPoint;
 /**
  * Created by Артём on 04.10.2017.
  */
-public abstract class VisualCurve implements ICurve, IDrawable {
+public class VisualCurve implements ICurve, IDrawable {
+    private ICurve mCurve;
+
+    public VisualCurve(ICurve curve) {
+        mCurve = curve;
+    }
 
     @Override
     public void Draw(IDrawer drawer) {
@@ -26,4 +31,18 @@ public abstract class VisualCurve implements ICurve, IDrawable {
         drawer.startP(getPoint(param));
     }
 
+    @Override
+    public IPoint getPoint(double t) {
+        return mCurve.getPoint(t);
+    }
+
+    @Override
+    public double getLength(double t) {
+        return mCurve.getLength(t);
+    }
+
+    @Override
+    public double getParam(double l) {
+        return mCurve.getParam(l);
+    }
 }
