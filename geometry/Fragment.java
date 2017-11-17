@@ -23,11 +23,11 @@ public class Fragment implements ICurve  {
 
     @Override
     public double getLength(double t) {
-        return mCurve.getLength(t);
+        return mCurve.getLength(mStart + mRange * t) - mCurve.getLength(mStart);
     }
 
     @Override
     public double getParam(double l) {
-        return mCurve.getParam(l);
+        return (mCurve.getParam(l) - mStart)/mRange;
     }
 }

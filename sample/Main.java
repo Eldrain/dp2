@@ -140,6 +140,8 @@ public class Main extends Application {
         });
         Bezier bez = new Bezier(new Point(100, 100), new Point(190, 360), new Point(120, 250), new Point(125, 250));
         Line line = new Line(30, 350, 120, 100);
+        Line line2 = new Line(50, 90, 50, 200);
+
         VisualCurve visBez = new VisualCurve(bez);
         VisualCurve visLine = new VisualCurve(line);
         visLine.Draw(drawer2);
@@ -159,6 +161,12 @@ public class Main extends Application {
         temp.Draw(drawer2);
         temp = new VisualCurve(moveFrag2);
         temp.Draw(drawer2);
+
+        /*Chain chain = new Chain(bez, line);
+        Chain chain2 = new Chain(chain, line2);
+        VisualCurve cur = new VisualCurve(chain2);
+
+        cur.Draw(drawer1);*/
 
         //line.DrawPoint(drawer1, line.getParam(line.getLength(0.5)));
         //b1.DrawPoint(drawer2, line.getParam(line.getLength(0.5)));
