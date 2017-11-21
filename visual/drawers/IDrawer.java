@@ -1,5 +1,6 @@
-package visual;
+package visual.drawers;
 
+import geometry.ICurve;
 import geometry.IPoint;
 
 /**
@@ -9,5 +10,6 @@ public interface IDrawer {
     void line(IPoint from, IPoint to);
     void startP(IPoint p);
     void finishP(IPoint prevP, IPoint lastP);
+    void draw(ICurve curve);
     //void clear();
 }

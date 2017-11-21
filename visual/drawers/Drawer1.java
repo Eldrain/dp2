@@ -1,16 +1,18 @@
-package visual;
+package visual.drawers;
 
 import geometry.IPoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import visual.drawers.ADrawer;
 
 /**
  * Created by Артём on 13.10.2017.
  */
-public class Drawer1 implements IDrawer {
+public class Drawer1 extends ADrawer {
     GraphicsContext c;
 
-    public Drawer1(GraphicsContext c) {
+    public Drawer1(GraphicsContext c, double h) {
+        super(h);
         this.c = c;
     }
     

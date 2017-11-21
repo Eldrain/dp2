@@ -14,6 +14,10 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import visual.*;
+import visual.drawers.Drawer1;
+import visual.drawers.Drawer2;
+import visual.drawers.SVGDrawer1;
+import visual.drawers.SVGDrawer2;
 
 public class Main extends Application {
 	
@@ -25,7 +29,7 @@ public class Main extends Application {
     private SVGDrawer1 drawerSvg1;
     private SVGDrawer2 drawerSvg2;
     private Canvas reg1, reg2;
-    private Curves cr1, cr2;
+    private visual.Group cr1, cr2;
     private Button btn1, btn2, btn3, btn4;
     private static Text ta;
     private Random rnd;
@@ -79,28 +83,27 @@ public class Main extends Application {
         GraphicsContext con2 = reg2.getGraphicsContext2D();
         con1.rect(0, 0, 300, 400);
         con2.rect(0, 0, 300, 400);
-        Drawer1 drawer1 = new Drawer1(con1);
-        Drawer2 drawer2 = new Drawer2(con2);
-        drawerSvg1 = new SVGDrawer1(CANVAS_WIDTH, CANVAS_HEIGHT);
-        drawerSvg2 = new SVGDrawer2(CANVAS_WIDTH, CANVAS_HEIGHT);
+        Drawer1 drawer1 = new Drawer1(con1, 50);
+        Drawer2 drawer2 = new Drawer2(con2, 30);
+        drawerSvg1 = new SVGDrawer1(CANVAS_WIDTH, CANVAS_HEIGHT, 1000);
+        drawerSvg2 = new SVGDrawer2(CANVAS_WIDTH, CANVAS_HEIGHT, 1000);
 
-        cr1 = new Curves();
-        cr2 = new Curves();
-        //ctx3 = new Context(drawerSvg, 100);
+        cr1 = new visual.Group();
+        cr2 = new visual.Group();
 
         btn1.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 switch(rnd.nextInt(2)) {
                 case 0:
-                	cr1.addCurve(new VisualCurve(new Line(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
-                            CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble())));
+                	cr1.addCurve(new Line(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                            CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 case 1:
-                	cr1.addCurve(new VisualCurve(new Bezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
-                			CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble())));
+                	cr1.addCurve(new Bezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                			CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 }
-                cr1.Draw(drawer1);
+                drawer1.draw(cr1);
             }    
         });
         
@@ -109,16 +112,16 @@ public class Main extends Application {
             public void handle(ActionEvent e) {
                 switch(rnd.nextInt(2)) {
                 case 0:
-                    cr2.addCurve(new VisualCurve(new Line(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
-                            CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble())));
+                    cr2.addCurve(new Line(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                            CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 case 1:
-                    cr2.addCurve(new VisualCurve(new Bezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
+                    cr2.addCurve(new Bezier(CANVAS_WIDTH * rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(),
                             CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH * rnd.nextDouble(),
-                            CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble())));
+                            CANVAS_HEIGHT* rnd.nextDouble(), CANVAS_WIDTH* rnd.nextDouble(), CANVAS_HEIGHT* rnd.nextDouble()));
                 	break;
                 }
-                cr2.Draw(drawer2);
+                drawer2.draw(cr2);
             }    
         });
 
@@ -126,7 +129,7 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e) {
                 drawerSvg1.openFile(FILE1);
-                cr1.Draw(drawerSvg1);
+                drawerSvg1.draw(cr1);
                 drawerSvg1.closeFile();
             }
         });
@@ -134,33 +137,29 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e) {
                 drawerSvg2.openFile(FILE2);
-                cr2.Draw(drawerSvg2);
+                drawerSvg2.draw(cr2);
                 drawerSvg2.closeFile();
             }
         });
+
         Bezier bez = new Bezier(new Point(100, 100), new Point(190, 360), new Point(120, 250), new Point(125, 250));
         Line line = new Line(30, 350, 120, 100);
         Line line2 = new Line(50, 90, 50, 200);
 
-        VisualCurve visBez = new VisualCurve(bez);
-        VisualCurve visLine = new VisualCurve(line);
-        visLine.Draw(drawer2);
+
+        drawer2.draw(line);
         //1
         Fragment fr1 = new Fragment(bez, 0.5, 1);
-        VisualCurve temp = new VisualCurve(fr1);
-        temp.Draw(drawer1);
+        drawer1.draw(fr1);
         //2
         MoveTo moveFrag = new MoveTo(fr1, 40, 40);
-        temp = new VisualCurve(moveFrag);
-        temp.Draw(drawer1);
+        drawer1.draw(moveFrag);
         //3
         Fragment fr2 = new Fragment(line, 0.3, 0.7);
         MoveTo moveFrag2 = new MoveTo(fr2, fr1.getPoint(1));
 
-        temp = new VisualCurve(fr1);
-        temp.Draw(drawer2);
-        temp = new VisualCurve(moveFrag2);
-        temp.Draw(drawer2);
+        drawer2.draw(fr1);
+        drawer2.draw(moveFrag2);
 
         /*Chain chain = new Chain(bez, line);
         Chain chain2 = new Chain(chain, line2);
